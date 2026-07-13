@@ -2,8 +2,8 @@
 
 **AI-powered palm reading + Vedic Kundli mobile app.** Scan your palm, get an AI-generated reading of your heart, head, life, and fate lines — then explore your Vedic birth chart, all wrapped in a premium cosmic UI.
 ---
-### Contact me on linkedin for further projects https://www.linkedin.com/in/shiva-awasthi-659681372/
-### shivaawasthi531@gmail.com
+### Contact me on linkedin for further projects - https://www.linkedin.com/in/shiva-awasthi-659681372/
+### My mail id - shivaawasthi531@gmail.com
 ---
 
 ## ✨ Features
