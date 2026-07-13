@@ -1,8 +1,31 @@
+<div align="center">
+
 # 🔮 Astrovia
 
-**AI-powered Android app that reads palms and generates Vedic birth charts** — built end-to-end (mobile + backend + AI pipeline) as a full-stack solo project.
+### AI-Powered Palm Reading & Vedic Astrology App
 
-📧 shivaawasthi531@gmail.com &nbsp;|&nbsp; 🔗 [LinkedIn](https://www.linkedin.com/in/shiva-awasthi-659681372/)
+**Scan your palm → get an AI-generated reading. Enter your birth details → get a full Vedic Kundli.**
+*A full-stack mobile app combining computer vision, vector search, and generative AI — designed, built, and shipped solo.*
+
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+</div>
+
+---
+
+## 📬 Contact
+
+**Open to full-stack / mobile applications / AI-integration roles — always happy to connect.**
+
+📧 **Email:** shivaawasthi531@gmail.com
+🔗 **LinkedIn:** [linkedin.com/in/shiva-awasthi-659681372](https://www.linkedin.com/in/shiva-awasthi-659681372/)
+
+💬 **Have a project in mind, or want to see more of my work?** Reach out on LinkedIn or drop a mail — I'm always up for discussing new opportunities and collaborations.
 
 ---
 
@@ -196,4 +219,10 @@ eas build --profile production --platform android # generates an AAB for Play St
 
 ---
 
-Built with FastAPI + React Native + Cloudflare Workers AI + a lot of `--legacy-peer-deps`. ✨
+<div align="center">
+
+### Built with FastAPI + React Native + Cloudflare Workers AI + a lot of `--legacy-peer-deps` ✨
+
+**📩 Interested in this project or want to collaborate on something new? [Let's connect on LinkedIn](https://www.linkedin.com/in/shiva-awasthi-659681372/) or email shivaawasthi531@gmail.com**
+
+</div>
