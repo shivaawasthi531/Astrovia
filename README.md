@@ -22,8 +22,7 @@
 | **Backend** | FastAPI, PostgreSQL + SQLAlchemy, Alembic, JWT (python-jose + passlib) |
 | **AI — Vision** | **Llama 3.2 11B Vision Instruct** via Cloudflare Workers AI — detects palm line coordinates from the photo |
 | **AI — Text** | **Mistral 7B Instruct** via Cloudflare Workers AI — turns detected lines into a warm, personalized reading |
-| **Pattern Matching** | **FAISS** (Facebook AI Similarity Search) — see [Vector Matching](#-how-palm-pattern-matching-works) below |
-| **Astrology Data** | Prokerala API |
+| **Astrology Data** | Prokerala API (REAL TIME PLANET ANALYSIS|
 | **Database** | Neon (serverless Postgres) |
 | **Deployment** | Backend → Railway · Frontend → EAS Build (Android APK/AAB) |
 
