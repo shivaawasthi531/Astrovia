@@ -1,7 +1,7 @@
 # 🔮 Astrovia
 
 **AI-powered palm reading + Vedic Kundli mobile app.** Scan your palm, get an AI-generated reading of your heart, head, life, and fate lines — then explore your Vedic birth chart, all wrapped in a premium cosmic UI.
-## contact me on linkedin for further projects https://www.linkedin.com/in/shiva-awasthi-659681372/
+### contact me on linkedin for further projects https://www.linkedin.com/in/shiva-awasthi-659681372/
 ---
 
 ## ✨ Features
