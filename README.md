@@ -22,7 +22,7 @@
 | **Backend** | FastAPI, PostgreSQL + SQLAlchemy, Alembic, JWT (python-jose + passlib) |
 | **AI — Vision** | **Llama 3.2 11B Vision Instruct** via Cloudflare Workers AI — detects palm line coordinates from the photo |
 | **AI — Text** | **Mistral 7B Instruct** via Cloudflare Workers AI — turns detected lines into a warm, personalized reading |
-| **Astrology Data** | Prokerala API (REAL TIME PLANET ANALYSIS|
+| **Astrology Data** | Prokerala API (REAL TIME PLANET ANALYSIS) |
 | **Database** | Neon (serverless Postgres) |
 | **Deployment** | Backend → Railway · Frontend → EAS Build (Android APK/AAB) |
 
@@ -90,13 +90,6 @@ astrovia/
 
 ## 🚀 Setup
 
-### Prerequisites
-
-- Node.js 18+ and Python 3.11+
-- A free [Neon](https://neon.tech) Postgres database
-- A free [Cloudflare](https://dash.cloudflare.com) account (for Workers AI — Llama 3.2 Vision + Mistral)
-- (Optional, for Kundli) A [Prokerala](https://api.prokerala.com) API client ID/secret
-- **Expo Go** app on your phone (matching SDK version — this project uses **SDK 54**)
 
 ### 1. Backend
 
@@ -122,10 +115,7 @@ PROKERALA_CLIENT_ID=<optional, for Kundli>
 PROKERALA_CLIENT_SECRET=<optional, for Kundli>
 ```
 
-**Getting Cloudflare credentials:**
-1. Sign up at https://dash.cloudflare.com (free)
-2. Copy your **Account ID** from the dashboard sidebar
-3. Go to **My Profile → API Tokens → Create Token**, use the **"Workers AI"** template, generate and copy the token
+
 
 Run the server — **bind to `0.0.0.0`** so your phone (on the same Wi-Fi) can reach it:
 ```powershell
@@ -196,13 +186,6 @@ eas build --profile production --platform android # generates an AAB for Play St
 
 ---
 
-## 🔑 API Keys Needed
-
-| Service | Used for | Get it from |
-|---|---|---|
-| Cloudflare Workers AI | Palm line detection (Llama 3.2 Vision) + reading generation (Mistral) | https://dash.cloudflare.com (free tier) |
-| Prokerala | Kundli / planetary data | https://api.prokerala.com (free tier available) |
-| Neon | Postgres database | https://neon.tech (free tier) |
 
 ---
 
