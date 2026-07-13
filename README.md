@@ -2,7 +2,7 @@
 
 # 🔮 Astrovia
 
-### AI-Powered Palm Reading & Vedic Astrology App
+### AI-Powered Palm Reading & Vedic Astrology Android App
 
 **Scan your palm → get an AI-generated reading. Enter your birth details → get a full Vedic Kundli.**
 *A full-stack mobile app combining computer vision, vector search, and generative AI — designed, built, and shipped solo.*
