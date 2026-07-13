@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Astrovia",
+    "slug": "astrovia-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "astrovia",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shivaawasthi.astrovia",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Astrovia needs camera access to scan your palm for analysis."
+      }
+    },
+    "android": {
+      "package": "com.shivaawasthi.astrovia",
+      "permissions": ["CAMERA"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Astrovia needs camera access to scan your palm for analysis."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
