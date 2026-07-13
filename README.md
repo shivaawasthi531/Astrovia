@@ -1,52 +1,63 @@
 # 🔮 Astrovia
 
-**AI-powered android application for palm reading + Vedic Kundli.** Scan your palm, get an AI-generated reading of your heart, head, life, and fate lines — then explore your Vedic birth chart, all wrapped in a premium cosmic UI.
----
-### Contact me on linkedin for further projects - https://www.linkedin.com/in/shiva-awasthi-659681372/
-### My mail id - shivaawasthi531@gmail.com
----
+**AI-powered Android app that reads palms and generates Vedic birth charts** — built end-to-end (mobile + backend + AI pipeline) as a full-stack solo project.
 
-## ✨ Features
-
-- 📸 **Palm Scan** — Live camera capture → Llama 3.2 Vision detects palm lines → FAISS matches similar patterns → Mistral generates a personalized reading
-- 🪐 **Vedic Kundli** — Enter your birth details, get a full planetary chart + dasha periods, rendered as a rotating pseudo-3D wheel
-- 🌌 **Cosmic UI** — Parallax starfield, shooting stars, glassmorphism cards, animated SVG line-drawing reveals
-- 🔐 **JWT Auth** — Secure signup/login, session persisted on-device
-- 📜 **Reading History** — Every past scan saved and browsable
+📧 shivaawasthi531@gmail.com &nbsp;|&nbsp; 🔗 [LinkedIn](https://www.linkedin.com/in/shiva-awasthi-659681372/)
 
 ---
 
-## 🛠 Tech Stack
+## Highlights
+
+- Designed and shipped a **custom vector-similarity pipeline** (coordinate extraction → embedding → FAISS L2 search → score-conditioned LLM generation) — not just a wrapper around an API call
+- Integrated **two separate AI models** (vision + text) via Cloudflare Workers AI for palm-line detection and natural-language interpretation
+- Built a **production-style backend**: JWT auth, Alembic migrations, connection pooling for serverless Postgres, Dockerized for Railway deployment
+- Cross-platform mobile app in **React Native + Expo** with custom animations (Reanimated, SVG line-draw reveals, parallax UI)
+- Integrated a third-party astrology API (Prokerala) for real-time planetary chart data
+
+---
+
+## Features
+
+- 📸 **Palm Scan** — Live camera capture → AI vision model detects palm lines → FAISS matches similar patterns → LLM generates a personalized reading
+- 🪐 **Vedic Kundli** — Birth details in, full planetary chart + dasha periods out, rendered as a rotating pseudo-3D wheel
+- 🌌 **Cosmic UI** — Parallax starfield, glassmorphism cards, animated SVG reveals
+- 🔐 **JWT Auth** — Secure signup/login with on-device session persistence
+- 📜 **Reading History** — Every scan saved and browsable
+
+---
+
+## Tech Stack
 
 | Layer | Stack |
 |---|---|
-| **Frontend** | React Native + Expo (SDK 54) + Expo Router, TypeScript, Zustand, Reanimated + Gesture Handler, `react-native-svg`, `expo-camera` |
-| **Backend** | FastAPI, PostgreSQL + SQLAlchemy, Alembic, JWT (python-jose + passlib) |
-| **AI — Vision** | **Llama 3.2 11B Vision Instruct** via Cloudflare Workers AI — detects palm line coordinates from the photo |
-| **AI — Text** | **Mistral 7B Instruct** via Cloudflare Workers AI — turns detected lines into a warm, personalized reading |
-| **Astrology Data** | Prokerala API (REAL TIME PLANET ANALYSIS) |
+| **Frontend** | React Native, Expo (SDK 54), Expo Router, TypeScript, Zustand, Reanimated + Gesture Handler, `react-native-svg`, `expo-camera` |
+| **Backend** | FastAPI, PostgreSQL + SQLAlchemy, Alembic, JWT (python-jose, passlib) |
+| **AI — Vision** | Llama 3.2 11B Vision Instruct (Cloudflare Workers AI) — palm line coordinate detection |
+| **AI — Text** | Mistral 7B Instruct (Cloudflare Workers AI) — personalized reading generation |
+| **Search** | FAISS (`IndexFlatL2`) — self-hosted vector similarity search |
+| **Astrology Data** | Prokerala API (real-time planetary analysis) |
 | **Database** | Neon (serverless Postgres) |
-| **Deployment** | Backend → Railway · Frontend → EAS Build (Android APK/AAB) |
+| **Deployment** | Railway (backend), EAS Build (Android APK/AAB) |
 
 ---
 
-## 🧬 How Palm Pattern Matching Works
+## System Design: Palm Pattern Matching
 
-The FAISS step is what makes each reading feel personalized rather than generic — here's the pipeline, end to end:
+The FAISS pipeline is the technical core of the app — it's what makes each reading feel personalized instead of generic:
 
-1. **Capture** — Camera takes a JPEG of the palm.
-2. **Vision detection** — Llama 3.2 Vision returns 4 sets of `{x, y}` coordinates (heart / head / life / fate lines), normalized 0–1 so they work at any screen size.
-3. **Embedding** — `app/services/embedding.py` resamples each line to a fixed 16 points and flattens all 4 lines into a single **128-dimensional float32 vector**. This turns a variable-length, messy line shape into a fixed-size numeric fingerprint that can be compared mathematically.
-4. **Similarity search** — `app/services/vector_db.py` wraps a FAISS `IndexFlatL2` index. The new vector is compared against every previously scanned palm's vector using L2 (Euclidean) distance — the closest match tells us "this palm's line shape is most similar to reading #X."
-5. **Score conversion** — Raw L2 distance is converted to a friendlier 0–1 similarity score (`1 / (1 + distance)`), which gets passed to the text model as context (e.g. *"85% similar to a known pattern"*).
-6. **Interpretation** — Mistral uses the line shapes *and* that similarity context to write the final reading.
-7. **Indexing** — The new vector is added to the FAISS index and persisted to disk (`faiss_store/`), so it improves future matches too — the index grows with every scan.
+1. **Capture** — Camera takes a JPEG of the palm
+2. **Vision detection** — Vision model returns 4 sets of normalized `{x, y}` coordinates (heart / head / life / fate lines)
+3. **Embedding** — Each line is resampled to 16 points and flattened into a single **128-dimensional float32 vector** — a fixed-size fingerprint from variable-length line data
+4. **Similarity search** — Vector compared against all prior scans using FAISS L2 distance to find the closest match
+5. **Score conversion** — Raw distance converted to a 0–1 similarity score, passed as context to the text model
+6. **Interpretation** — LLM generates the reading using line shapes + similarity context
+7. **Indexing** — New vector persisted to disk, so the index — and match quality — improves with every scan
 
-This is a lightweight, self-hosted alternative to a managed vector DB (Pinecone, Weaviate, etc.) — appropriate for a single-service app with a modest number of readings. If usage scales into the millions of vectors, swapping `IndexFlatL2` for an approximate index like `IndexIVFFlat` or `IndexHNSWFlat` would keep search fast.
+*Chosen `IndexFlatL2` as a lightweight, self-hosted alternative to a managed vector DB, appropriate at this scale; noted `IndexIVFFlat`/`IndexHNSWFlat` as the upgrade path if usage scales to millions of vectors.*
 
 ---
 
-## 📁 Project Structure
+## Architecture
 
 ```
 astrovia/
@@ -90,8 +101,7 @@ astrovia/
 
 ---
 
-## 🚀 Setup
-
+## Setup
 
 ### 1. Backend
 
@@ -116,8 +126,6 @@ CLOUDFLARE_TEXT_MODEL=@cf/mistral/mistral-7b-instruct-v0.2
 PROKERALA_CLIENT_ID=<optional, for Kundli>
 PROKERALA_CLIENT_SECRET=<optional, for Kundli>
 ```
-
-
 
 Run the server — **bind to `0.0.0.0`** so your phone (on the same Wi-Fi) can reach it:
 ```powershell
@@ -153,7 +161,7 @@ Scan the QR code with **Expo Go** on your phone (phone and PC must be on the sam
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Problem | Fix |
 |---|---|
@@ -169,7 +177,7 @@ Scan the QR code with **Expo Go** on your phone (phone and PC must be on the sam
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 ### Backend → Railway
 1. Push `astrovia-backend/` to a GitHub repo
@@ -185,9 +193,6 @@ eas login
 eas build --profile preview --platform android   # generates an installable APK
 eas build --profile production --platform android # generates an AAB for Play Store
 ```
-
----
-
 
 ---
 
