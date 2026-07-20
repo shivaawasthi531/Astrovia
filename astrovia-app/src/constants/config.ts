@@ -5,7 +5,7 @@
 
 // Change this to your Railway URL once deployed, or your local IP for device testing
 // e.g. 'http://192.168.1.5:8000' — find your IP with `ipconfig` on Windows
-export const API_BASE_URL = 'http://10.138.185.29:8000/api/v1';
+export const API_BASE_URL = 'https://astrovia-production-1916.up.railway.app/api/v1';
 
 export const CONFIG = {
   MAX_IMAGE_SIZE_MB: 10,
