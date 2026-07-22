@@ -71,16 +71,28 @@ def build_chart_svg_data(planetary_positions: Dict) -> Dict:
     Converts raw planet longitude data into house/angle data the frontend's
     rotating wheel component can render directly, without doing astrology
     math on-device.
+
+    Prokerala's `degree` field is the position WITHIN a zodiac sign (0-30),
+    not the absolute position around the full 360-degree wheel. Without
+    factoring in which house/sign the planet is in, every planet's angle
+    collapses into the same narrow 0-30 range, causing them to visually
+    cluster on top of each other. We fix that by computing the absolute
+    longitude: (house - 1) * 30 degrees per earlier sign, plus the degree
+    within the current sign.
     """
     planets = planetary_positions.get("planet_position", [])
     chart_data = []
     for planet in planets:
+        house = planet.get("position", 1)  # 1-12, which zodiac sign the planet sits in
+        degree_in_sign = planet.get("degree", 0)  # 0-30 within that sign
+        absolute_longitude = ((house - 1) * 30) + degree_in_sign  # 0-360 around the wheel
+
         chart_data.append(
             {
                 "name": planet.get("name"),
-                "house": planet.get("position"),
-                "degree": planet.get("degree", 0),
-                "angle": (planet.get("degree", 0) / 360) * 360,  # degrees on the wheel
+                "house": house,
+                "degree": degree_in_sign,
+                "angle": absolute_longitude,
             }
         )
     return {"planets": chart_data}
